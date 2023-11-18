@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Contacto</h1>
+        
+        <!-- ... ostatak koda ... -->
+
+<form id="mailForm">
+    <div class="form-group">
+        <label for="from_address">Sender's mail:</label>
+        <input type="text" id="from_address" name="from_address" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password: (of sender's mail address)</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+
+    <div class="form-group {% if hide_to_address %}hidden{% endif %}">
+        <label for="to_address">To:</label>
+        <input type="text" id="to_address" name="to_address" value="{{ default_to_address }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="company_name">Company Name:</label>
+        <input type="text" id="company_name" name="company_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="company_activity">Company Activity:</label>
+        <input type="text" id="company_activity" name="company_activity" required>
+    </div>
+
+    <div class="form-group">
+        <label for="company_area">Company Area:</label>
+        <input type="text" id="company_area" name="company_area" required>
+    </div>
+
+    <div class="form-group">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required>
+    </div>
+
+    <div class="form-group">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+    </div>
+
+    <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required>
+    </div>
+
+    <div class="form-group">
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" required></textarea>
+    </div>
+
+    <button type="button" onclick="sendMail()">Send</button>
+</form>
+
+<!-- ... ostatak koda ... -->
+
+    </div>
+
+    <script>
+        function sendMail() {
+            var form = document.getElementById("mailForm");
+            var formData = new FormData(form);
+
+            fetch('/send_mail', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    // Optional: Do something on success
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
+
