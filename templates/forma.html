@@ -70,27 +70,33 @@
 
     </div>
 
-    <script>
-        function sendMail() {
-            var form = document.getElementById("mailForm");
-            var formData = new FormData(form);
+<!-- ... ostatak koda ... -->
 
-            fetch('/send_mail', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === 'success') {
-                    // Optional: Do something on success
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+<script>
+    function sendMail() {
+        var form = document.getElementById("mailForm");
+        var formData = new FormData(form);
+
+        fetch('/send_mail', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.status === 'success') {
+                // Očisti formu ako je e-mail uspješno poslan
+                form.reset();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+<!-- ... ostatak koda ... -->
+
 </body>
 </html>
 
